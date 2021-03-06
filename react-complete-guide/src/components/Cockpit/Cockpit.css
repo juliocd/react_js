@@ -1,14 +1,12 @@
-
-
-.bold{
+.Bold{
     font-weight: 600;
 }
 
-.red{
+.Red{
     color: red;
 }
 
-.Button{
+.Cockpit button{
     background-color: red;
     font: inherit;
     border: 1px solid rgb(0, 247, 255);
@@ -17,12 +15,12 @@
     color: rgb(182, 45, 152);
 }
 
-.Button:hover {
+.Cockpit button:hover {
     background-color: rgb(66, 202, 12);
     color: black;
 }
 
-.Button.Blue{
+.Cockpit button.Blue{
     background-color: pink;
     font: inherit;
     border: 1px solid rgb(89, 0, 255);
@@ -31,7 +29,7 @@
     color: rgb(218, 207, 215);
 }
 
-.Button.Blue:hover {
+.Cockpit button.Blue:hover {
     background-color: rgb(202, 173, 12);
     color: black;
 }
