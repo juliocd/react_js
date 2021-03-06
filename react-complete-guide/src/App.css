@@ -1,0 +1,37 @@
+
+
+.bold{
+    font-weight: 600;
+}
+
+.red{
+    color: red;
+}
+
+.Button{
+    background-color: red;
+    font: inherit;
+    border: 1px solid rgb(0, 247, 255);
+    padding: 9px;
+    cursor: pointer;
+    color: rgb(182, 45, 152);
+}
+
+.Button:hover {
+    background-color: rgb(66, 202, 12);
+    color: black;
+}
+
+.Button.Blue{
+    background-color: pink;
+    font: inherit;
+    border: 1px solid rgb(89, 0, 255);
+    padding: 9px;
+    cursor: pointer;
+    color: rgb(218, 207, 215);
+}
+
+.Button.Blue:hover {
+    background-color: rgb(202, 173, 12);
+    color: black;
+}
