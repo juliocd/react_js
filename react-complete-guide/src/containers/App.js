@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import classesApp from'./App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/WithClass'; //It's not a component, is a normal function instead;
+import Aux from '../hoc/Aux';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
 constructor(props) {
@@ -29,7 +32,9 @@ constructor(props) {
       }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true,
+    authenticated: false
   }
 
   static getDerivedStateFromProps(props, state){
@@ -41,31 +46,18 @@ constructor(props) {
     console.log('[App.js] componentDidMount');
   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        {
-          name: newName,
-          age: 34,
-          id: 33
-        },
-        {
-          name: "AnaOV",
-          age: 30,
-          id: 32
-        },
-        {
-          name: "General",
-          age: 33,
-          id: 31
-        }
-      ]
-    })
+  componentDidUpdate(){
+    console.log('[App.js] componentDidUpdate');
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('[App.js] shouldComponentUpdate');
+    return true; // false: Avoid the update
   }
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
-      return p.id = id;
+      return p.id == id;
     });
     const person = {
       ...this.state.persons[personIndex]
@@ -75,6 +67,7 @@ constructor(props) {
     let persons = [...this.state.persons];
     persons[personIndex] = person;
 
+    // Best practice, if you need to use the previos props' previous values
     this.setState({
       persons: persons
     })
@@ -91,6 +84,10 @@ constructor(props) {
     this.setState({persons: persons})
   }
 
+  loginHandler = () =>{
+    this.setState({authenticated: true})
+  }
+
   render() {
     console.log('[App.js] render')
     let persons = null;
@@ -103,16 +100,25 @@ constructor(props) {
     }
 
     return (
-        <div className={classesApp.App}>
-          <Cockpit
-            appTitle={this.props.appTitle}
-            clicked={this.togglePersonHandler}
-            showPersons = {this.state.showPersons}
-            persons = {this.state.persons} />
-            {persons}
-        </div>
+        <Aux>
+          <button key="k1" onClick={() => {
+            this.setState({showCockpit: false})
+            }}>Remove Cockpit</button>
+            <AuthContext.Provider value={{
+                authenticated: this.state.authenticated,
+                login: this.loginHandler
+            }}>
+              {this.state.showCockpit ? 
+              <Cockpit
+                appTitle={this.props.appTitle}
+                clicked={this.togglePersonHandler}
+                showPersons = {this.state.showPersons}
+                personsLength = {this.state.persons.length} />  : null}
+              {persons}
+            </AuthContext.Provider>
+        </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classesApp.App); // Wraping component
